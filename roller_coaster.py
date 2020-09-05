@@ -5,16 +5,16 @@ import matplotlib as mpl
 
 # load rankings data here:
 dfwood = pd.read_csv(
-    'C:\codeacademy\data_science\script_coaster\golden_ticket_award_winners_wood.csv')
+    'golden_ticket_award_winners_wood.csv')
 dfwood.columns = ['Rank', 'Name', 'Park', 'Location',
                   'Supplier', 'Year_Built', 'Points', 'Year_of_Rank']
 dfroller = pd.read_csv(
-    'C:\codeacademy\data_science\script_coaster\\roller_coaster.csv')
+    'roller_coaster.csv')
 
 #print(dfroller.head())
 #print(dfwood.head())
 roller_count1 = dfwood.Name.count()
-dfsteel = pd.read_csv("C:\codeacademy\data_science\script_coaster\golden_ticket_award_winners_steel.csv")
+dfsteel = pd.read_csv("golden_ticket_award_winners_steel.csv")
 dfsteel.columns = ['Rank', 'Name', 'Park', 'Location',
                    'Supplier', 'Year_Built', 'Points', 'Year_of_Rank']
 #print(dfsteel.head())
@@ -22,6 +22,7 @@ roller_count2 = dfsteel.Name.count()
 unique_wood_supplier = dfwood.Supplier.nunique()
 unique_steel_supplier = dfsteel.Supplier.nunique()
 
+# Function that plots the ranking of a roller coaster for a period of years
 def ranking_roller_coaster(Name, df, Park):
     roller_name = df[(df.Name == Name) & (df.Park == Park)]
     roller_name = roller_name.reset_index(drop=True)
@@ -36,7 +37,7 @@ def ranking_roller_coaster(Name, df, Park):
     plt.show()
     return roller_name
 
-
+# Function that plots the comparative ranking of 2 roller coasters for a period of years
 def comparative_ranking_two_roller_coaster(Name1, Name2, df, Park1, Park2):
     roller_1 = df[(df.Name == Name1) & (df.Park == Park1)]
     roller_1 = roller_1.reset_index(drop=True)
@@ -57,7 +58,7 @@ def comparative_ranking_two_roller_coaster(Name1, Name2, df, Park1, Park2):
     plt.show()
     return roller_1 + roller_2
 
-
+# function that returns a plot with the rankinks of a series of roller coasters determined by the rank provided.
 def top_ranking_roller_coasters(rank_provided, df):
     ranked_coasters = df[(df.Rank <= rank_provided)]
     labels = list(name for name in ranked_coasters.Name)
@@ -77,7 +78,7 @@ def top_ranking_roller_coasters(rank_provided, df):
     plt.show()
     return df
 
-
+# funtion that returns a historigram of the values contained in a column (height, length, speed) of roller coasters.
 def historigram_coasters(dataset, column_name):
     dataset_column = dataset.dropna(subset=[column_name])
     dataset_column2 = np.array(dataset_column[column_name])
@@ -91,6 +92,7 @@ def historigram_coasters(dataset, column_name):
     plt.show()
     return dataset_column2
 
+# fuction that returns a bar chart with the number of invertions for all the attractions in a given park
 def bar_inversions_chart(dataset, amusment_park):
     plt.xlabel('Attractions in ' + amusment_park)
     plt.ylabel('Number of Inversions')
@@ -107,6 +109,7 @@ def bar_inversions_chart(dataset, amusment_park):
     plt.show()
     return number_inversions
 
+# funtion that returns a pie chart that compares the number of attractions open with the ones that are closed.
 def pie_operating_closed(dataset):
     operating = dataset[dataset.status.isin(['status.operating'])]
     closed = dataset[dataset.status.isin(['status.closed.definitely'])]
@@ -122,6 +125,7 @@ def pie_operating_closed(dataset):
     plt.show()
     return operating
 
+# Builds a scattered plot with the two sets of columns (speed, height, length) of roller coasters.
 def scattered_plot(dataset, column1, column2):
     dataset = dataset.dropna()
     titles = [column1, column2]
